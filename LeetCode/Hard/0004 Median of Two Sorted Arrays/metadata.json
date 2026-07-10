@@ -1,0 +1,10 @@
+{
+  "code": "class Solution {\npublic:\n    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {\n        // Ensure nums1 is the smaller array\n        if (nums1.size() > nums2.size())\n            return findMedianSortedArrays(nums2, nums1);\n\n        int m = nums1.size();\n        int n = nums2.size();\n\n        int left = 0, right = m;\n\n        while (left <= right) {\n            int partitionX = (left + right) / 2;\n            int partitionY = (m + n + 1) / 2 - partitionX;\n\n            int maxLeftX = (partitionX == 0) ? INT_MIN : nums1[partitionX - 1];\n            int minRightX = (partitionX == m) ? INT_MAX : nums1[partitionX];\n\n            int maxLeftY = (partitionY == 0) ? INT_MIN : nums2[partitionY - 1];\n            int minRightY = (partitionY == n) ? INT_MAX : nums2[partitionY];\n\n            if (maxLeftX <= minRightY && maxLeftY <= minRightX) {\n                // Correct partition found\n                if ((m + n) % 2 == 0) {\n                    return (max(maxLeftX, maxLeftY) +\n                            min(minRightX, minRightY)) / 2.0;\n                } else {\n                    return max(maxLeftX, maxLeftY);\n                }\n            }\n            else if (maxLeftX > minRightY) {\n                right = partitionX - 1;\n            }\n            else {\n                left = partitionX + 1;\n            }\n        }\n\n        return 0.0;\n    }\n};",
+  "difficulty": "Hard",
+  "language": "c++",
+  "platform": "LeetCode",
+  "problemName": "Median of Two Sorted Arrays",
+  "problemNumber": "4",
+  "submissionDate": "2026-07-10T08:48:08.560Z",
+  "submissionUrl": "https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/2062643943/"
+}
